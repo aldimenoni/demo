@@ -9,7 +9,9 @@ type ProgressCardProps = {
   category: UserProgressCategory
 }
 
-export default function ProgressCard({ category }: ProgressCardProps) {
+export default function ProgressCard({
+  category,
+}: Readonly<ProgressCardProps>) {
   const { id, title, completedExercises, totalExercises } = category
   const theme = categoryTheme[id]
   const { safeCompleted, safeTotal, percentage } = getSafeProgressValues(

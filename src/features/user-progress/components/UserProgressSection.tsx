@@ -1,11 +1,18 @@
 import { useCallback, useRef, useState } from 'react'
 import ProgressCard from './ProgressCard'
 import { userProgressMock } from '../mocks/userProgress.mock'
+import type { UserProgressCategory } from '../types/userProgress.types'
 
 const MOBILE_CARD_WIDTH = 264
 const MOBILE_CARD_GAP = 16
 
-export default function UserProgressSection() {
+type UserProgressSectionProps = {
+  categories?: UserProgressCategory[]
+}
+
+export default function UserProgressSection({
+  categories = userProgressMock,
+}: Readonly<UserProgressSectionProps>) {
   const carouselRef = useRef<HTMLUListElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
 
@@ -17,8 +24,8 @@ export default function UserProgressSection() {
       carousel.scrollLeft / (MOBILE_CARD_WIDTH + MOBILE_CARD_GAP),
     )
 
-    setActiveIndex(Math.min(Math.max(index, 0), userProgressMock.length - 1))
-  }, [])
+    setActiveIndex(Math.min(Math.max(index, 0), categories.length - 1))
+  }, [categories.length])
 
   return (
     <section
@@ -35,7 +42,7 @@ export default function UserProgressSection() {
         onScroll={handleScroll}
         className="flex list-none snap-x snap-mandatory gap-4 overflow-x-auto pt-4 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] md:snap-none md:gap-5 md:overflow-visible md:pt-0 md:pb-0 [&::-webkit-scrollbar]:hidden"
       >
-        {userProgressMock.map((category) => (
+        {categories.map((category) => (
           <li
             key={category.id}
             className="w-[264px] shrink-0 snap-start md:w-auto md:min-w-0 md:flex-1 md:shrink md:snap-align-none"
@@ -51,12 +58,12 @@ export default function UserProgressSection() {
         role="tablist"
         aria-label="Paginación del carrusel"
       >
-        {userProgressMock.map((category, index) => (
+        {categories.map((category, index) => (
           <span
             key={category.id}
             role="tab"
             aria-selected={activeIndex === index}
-            aria-label={`Tarjeta ${index + 1} de ${userProgressMock.length}`}
+            aria-label={`Tarjeta ${index + 1} de ${categories.length}`}
             className={`size-2.5 rounded-full ${
               activeIndex === index ? 'bg-[#00A59B]' : 'bg-[#D7DADD]'
             }`}
