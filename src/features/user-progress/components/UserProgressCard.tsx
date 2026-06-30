@@ -6,8 +6,8 @@ type UserProgressCardProps = {
 
 export function UserProgressCard({ category }: UserProgressCardProps) {
   return (
-    <article className="flex flex-col rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-      <header className="mb-6 flex items-center gap-3">
+    <article className="flex h-full flex-col rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <header className="mb-6 flex items-start gap-3">
         <img
           src={category.iconSrc}
           alt=""
@@ -15,7 +15,7 @@ export function UserProgressCard({ category }: UserProgressCardProps) {
           height={28}
           className="size-7 shrink-0"
         />
-        <h2 className="text-base font-semibold text-text-primary">
+        <h2 className="line-clamp-2 min-h-10 text-base leading-5 font-semibold text-text-primary">
           {category.categoryName}
         </h2>
       </header>
@@ -31,7 +31,7 @@ export function UserProgressCard({ category }: UserProgressCardProps) {
 
       <button
         type="button"
-        className="w-full rounded-full bg-button-primary py-3 text-sm font-semibold text-white"
+        className="mt-auto w-full rounded-full bg-button-primary py-3 text-sm font-semibold text-white"
       >
         {category.buttonLabel}
       </button>
